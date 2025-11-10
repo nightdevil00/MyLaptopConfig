@@ -190,6 +190,44 @@ EOF
     echo "   → Right-click inside Nautilus → Scripts → Open Terminal Here"
 }
 
+
+run_copy_dotconfig_files() {
+    echo "--- Copying .config files ---"
+
+    # Destination directory
+    DEST_DIR="$HOME/.config"
+    mkdir -p "$DEST_DIR"
+
+    # Source directory for waybar and spotify-flags
+    SOURCE_CONFIG_DIR="$SCRIPT_DIR/.config"
+
+    # Copy waybar directory
+    if [ -d "$SOURCE_CONFIG_DIR/waybar" ]; then
+        echo "Copying waybar configuration..."
+        cp -r "$SOURCE_CONFIG_DIR/waybar" "$DEST_DIR/"
+    else
+        echo "waybar configuration not found in $SOURCE_CONFIG_DIR, skipping."
+    fi
+
+    # Copy spotify-flags.conf
+    if [ -f "$SOURCE_CONFIG_DIR/spotify-flags.conf" ]; then
+        echo "Copying spotify-flags.conf..."
+        cp "$SOURCE_CONFIG_DIR/spotify-flags.conf" "$DEST_DIR/"
+    else
+        echo "spotify-flags.conf not found in $SOURCE_CONFIG_DIR, skipping."
+    fi
+
+    echo ".config files copied."
+}
+
+run_install_pacman_packages() {
+    echo "--- Installing Pacman Packages ---"
+    local packages=("nano" "gedit" "kate" "vlc" "vlc-plugins-all" "qbittorrent")
+    echo "Installing: ${packages[@]}"
+    sudo pacman -S --needed --noconfirm "${packages[@]}"
+    echo "Pacman packages installation complete."
+}
+
 # --- Main Logic ---
 
 # Define required files and directories for Hyprland config
@@ -289,12 +327,14 @@ main() {
     echo "--- Additional Tasks ---"
     echo "You can now choose to run additional setup tasks."
     
-    select task in "Configure Sudo" "Install Gaming Dependencies" "Remove Transparency" "Install Nautilus Scripts" "Exit"; do
+    select task in "Configure Sudo" "Install Gaming Dependencies" "Remove Transparency" "Install Nautilus Scripts" "Copy .config files" "Install Pacman Packages" "Exit"; do
         case $task in
-            "Configure Sudo" ) run_sudo_setup; break;; 
-            "Install Gaming Dependencies" ) run_gaming_dependencies; break;; 
-            "Remove Transparency" ) run_remove_transparency; break;; 
-            "Install Nautilus Scripts" ) run_nautilus_scripts; break;; 
+            "Configure Sudo" ) run_sudo_setup;; 
+            "Install Gaming Dependencies" ) run_gaming_dependencies;; 
+            "Remove Transparency" ) run_remove_transparency;; 
+            "Install Nautilus Scripts" ) run_nautilus_scripts;; 
+            "Copy .config files" ) run_copy_dotconfig_files;;
+            "Install Pacman Packages" ) run_install_pacman_packages;;
             "Exit" ) echo "Exiting."; break;; 
             * ) echo "Invalid option.";;
         esac

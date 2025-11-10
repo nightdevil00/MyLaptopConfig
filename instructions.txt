@@ -1,6 +1,0 @@
-1. Copy Fonts and Scripts folder to .config/hypr/
-2. Copy bindings.conf , hyprlock.conf , input.conf , looknfeel.conf, monitors.conf, steam.conf to .config/hypr/
-3. Edit hyprland.conf and add ~source = .config/hypr/steam.conf to it
-4. execute sudo.sh, install_gaming_dependecies.sh , remove_transparency.sh and Nautilus_custom_scripts.sh but it's better to have everything in the same script omarchy-fresh-install.sh and only install --needed
-
-
