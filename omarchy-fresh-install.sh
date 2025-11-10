@@ -271,6 +271,13 @@ perform_hyprland_setup() {
 
     copy_if_exists "Fonts"
     copy_if_exists "Scripts"
+
+    # Make scripts executable
+    if [ -d "$HOME/.config/hypr/Scripts" ]; then
+        echo "Making scripts in $HOME/.config/hypr/Scripts executable..."
+        chmod +x "$HOME/.config/hypr/Scripts"/*
+    fi
+
     copy_if_exists "bindings.conf"
     copy_if_exists "hyprlock.conf"
     copy_if_exists "input.conf"
