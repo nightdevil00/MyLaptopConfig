@@ -222,7 +222,7 @@ run_copy_dotconfig_files() {
 
 run_install_pacman_packages() {
     echo "--- Installing Pacman Packages ---"
-    local packages=("nano" "gedit" "kate" "vlc" "vlc-plugins-all" "qbittorrent")
+    local packages=("nano" "gedit" "kate" "vlc" "vlc-plugins-all" "qbittorrent" "usbmuxd" "libimobiledevice")
     echo "Installing: ${packages[@]}"
     sudo pacman -S --needed --noconfirm "${packages[@]}"
     echo "Pacman packages installation complete."
